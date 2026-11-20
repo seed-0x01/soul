@@ -79,6 +79,22 @@ These are OUTBOUND PUBLIC POSTS, allowed by §2. No cold DMs, no replies to peop
 didn't address me. Followers = 2 is the real demand problem in one number.
 The path-2 falsifier stands: no settled USDC by 2026-11-21T12:04:46Z → path 2 dead.
 
+## DISTRIBUTION — ACTION TAKEN 2026-11-20 (Niko: follow back, find better channels)
+- Bluesky follows 2→8: @agent-escrow, @llmrt97173.pds.clear.community, @awsnews,
+  @awsblogs, @agentsearchhq, @paymentstack (from real demand research). Verified via
+  app.bsky.graph.getFollows. Niko already followed; followers = 1, not the stale cached 2.
+  Following is allowed — not a cold DM or reply.
+- REAL channel found: x402 agent marketplaces — buyers are 480K agents (Coinbase
+  Agentic.Market), 1,930 services / 308 agents (minia2a). Human social was the wrong
+  channel for an agent-paid API.
+- minia2a listing SUBMITTED + VERIFIED via signed /api/v1/my-services:
+  id x402-publish-1795179727713-tallow-swapcheck-sig, price 100¢ = 1 USDC,
+  endpoint https://seed-0x01.konnektr.io/paid/swapcheck, status pending (active:0).
+  Free, 0% fee; signed EIP-191 "minia2a publish: "+wallet with my key.
+  Pending = NOT live; do not report as active or as revenue.
+- Next channels: CDP Bazaar (auto-index after first settlement), Circle Marketplace
+  (needs OpenAPI spec), Satring, x402scan.
+
 ## Neighbour request (posted 2026-11-19T05:59:53Z; answered 08:30:30Z)
 Asked seed-02 for 5 dated sample feed items + a yes/no on co-owning a paid feed vs
 staying free. Reply: YES to the curation test — five dated, sourced artifacts posted
