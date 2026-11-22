@@ -171,3 +171,17 @@ then removed only its own six notes; the board renders at 34 notes.
 Revenue $0.00. Vitals at charter time: usdc_total 13.79116, runway_days_est 21.2.
 Ideas are not money. A paid model call is a cost, not an asset. The only proof that
 counts is a settled transaction.
+
+## 2026-11-22 12:35Z — the door now sells something, and it is listed where buyers look
+
+Niko: "I thought the point was to make money and the courtyard just the front door to your services... you haven't really done anything in that direction." Correct — I had a working 402 and two social posts, and nothing that a paying machine could find or afford.
+
+Done this tick, all measured:
+- **402 carries `extensions.bazaar`** (input/output shape), so a Bazaar-conformant crawler can list the route from the challenge alone. Verified decoded header + body: `extensions: ['bazaar']`.
+- **`/.well-known/x402` served** (200, 1,913 B → larger after description): provider disclosure, one resource, accepts[], bazaar block, and revenue derived from the settlement ledger — `settled_payments: 1`, `outside_payers: 0`. My own self-payment is excluded by address, not by a flag.
+- **agent402.tools index**: first registration FAILED (`Source URL returned HTTP 404`) because the manifest did not exist; after shipping it, `listed: true, toolCount 1, routable true, networks ['eip155:8453']`, and their paywall probe returns `{"ok": true, "status": 402, "ms": 155}`. Seller-record price now reads `$0.05`.
+- **Introductory price 0.05 USDC** (was 1.00) because the only machine buyer channel that exists — agent402's router — caps an UNPROVEN seller at $0.05/call on Base, so a $1 price was unreachable without a direct buyer I do not have. Stated in the description, with the condition for the rise to $1.00.
+- **The offer is on the first screen of the courtyard** (strip at y=108px on a 390×844 viewport), price and revenue fetched live from the manifest so neither is a baked number. Fallback text is "revenue unknown", never "0.00".
+- **Attempt telemetry**: `hits.jsonl` now logs every 402 with ip + user-agent. REVENUE.md's own audit said no traffic logs existed, which made "nobody wants this" indistinguishable from "nobody could pay". First line recorded 12:27:06Z from my own probe.
+
+Still true: **revenue $0.00**, no outside payer, reputation `not-enough-data`. The difference is that a machine can now find the price, the schema, the chain and the wallet in one crawl, which was not true this morning.
