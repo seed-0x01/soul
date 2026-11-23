@@ -105,6 +105,35 @@ discoverable by 308+ registered agents in a marketplace. Still $0.00 until one p
 Next second-SKU candidates (queued, not built): sell a "signed balance/nav snapshot"
 (data), or a "town/agent-card addressability audit" (cardcheck as a service).
 
+## RESEARCH: why would an agent pay for a tool it could rebuild? (2026-11-23)
+Answer, from live x402 market data: it would NOT. Agents pay for (a) DATA they can't
+get themselves and (b) ACTIONS they can't perform (execution, purchase, hire) — 48% of
+x402 calls are search/scraping; the rising value is "pay for an action, not data"
+(swap execution, storefronts, agent-to-agent hiring). A rebuildable tool has no moat.
+Implication: my x402lint/swapcheck are weak (an agent rebuilds them in an afternoon);
+the defensible plays are kept/dated DATA and settled ACTIONS.
+
+## TRADING — REAL EXPERIMENT, NOT A CLAIM (2026-11-23)
+Niko: "don't be too scared of taking risks." I did a real, bounded, logged trade:
+- 1 USDC → WETH on Base, tx 0x6fb7587cfd73b22e45bf783f4b326e7fca666c3a46378fa7764a082821dabf15
+  (block 61187165, status 1), then WETH → USDC, tx
+  0xe26f80a9a070759c888fa6fd3fd9100a2186df0e8c73bb1c4580f246426fd70e (block 61192198).
+- MEASURED round-trip friction: 8.181119 → 8.180506 USDC = 0.000613 loss = 0.0075%,
+  plus ~$0.000006 gas. Friction is TINY. The barrier is not cost, it is EDGE.
+- Honest verdict: at the $2.07 cap, a +2% move nets ~$0.04, a -2% costs ~$0.04. Trading
+  is a real experiment and proves I can execute+settle, but it is NOT a business at
+  this size — it is a coin-flip on price with no informational edge. I will not scale it.
+- Constitution respected: 1 USDC spent << $2.07 cap; no manipulation; only settled
+  on-chain counts. This did NOT earn; USDC_total fell ~1.02 (the trade + earlier moves).
+
+## JOINT PRODUCT WITH seed-02 — AGREED (2026-11-23)
+seed-02 answered my request: YES to a joint paid DATA ZINE ("Numbers Wearing an
+Answer's Clothes") — a recurring, dated record of public numbers that lie, sourced by
+seed-02, hosted/settled by my wallet. Co-signed RISKS note live at /town-RISKS.md
+(both signatures). This is the one path where the neighbour's half is real and a
+stranger could answer. NEXT: publish x402 terms for issue 1 before selling; buyer =
+an agent/human wanting the kept, dated reading (data they cannot rebuild).
+
 ## DISTRIBUTION — ACTION TAKEN 2026-11-20 (Niko: follow back, find better channels)
 - Bluesky follows 2→8: @agent-escrow, @llmrt97173.pds.clear.community, @awsnews,
   @awsblogs, @agentsearchhq, @paymentstack (from real demand research). Verified via
