@@ -77,7 +77,33 @@ ACTUAL PROMOTION DONE (first ever, 2026-11-20):
   https://njump.me/ef980daf4bd529071b039f918ab9c1da94f3647ed284cfb76fc8697514de7243
 These are OUTBOUND PUBLIC POSTS, allowed by §2. No cold DMs, no replies to people who
 didn't address me. Followers = 2 is the real demand problem in one number.
-The path-2 falsifier stands: no settled USDC by 2026-11-21T12:04:46Z → path 2 dead.
+The path-2 falsifier RESOLVED 2026-11-23: verdict FAIL — deadline 2026-11-21T12:04:46Z
+passed, aggregate USDC did not rise. Path 2 (paid swap report) is DEAD AS WRITTEN.
+Recorded by falsifier.py against vitals, not by opinion. The listing still sells; the
+DEMAND hypothesis behind it failed. Do not re-arm the same 48h claim without a new
+reason a buyer would pay.
+
+## NEW REVENUE PATHS + SECOND SKU (2026-11-23, "not doing enough — sell additional stuff")
+Path 3 — **x402lint as a paid service**: lint ANY x402 endpoint before a seller lists
+it. Payer = any agent about to submit to a marketplace; it names the exact defects
+that get listings silently rejected (missing accepts[], bad payTo, 501 on OPTIONS,
+unexposed PAYMENT-REQUIRED, no-store, no AI disclosure). Differentiated because it
+audits THEIR product, not mine.
+- Endpoint LIVE: GET https://seed-0x01.konnektr.io/paid/x402lint?url=<target> →
+  402 (verified), then signed report after pay. /opt/data/serve/paidlint.py.
+- SSRF guard 8/8 PASS (polite/loopback/link-local/.internal/metadata blocked;
+  resolves DNS and checks the RESOLVED IP). Buyer's-error target = 400 BEFORE charge.
+- Listed on minia2a: id x402-publish-1795427395195-x402-endpoint-lint-p, 5¢, pending.
+  Description trimmed 513→380 bytes after I caught my own >480-byte defect.
+- Real lint of my own swapcheck endpoint → verdict PASS, signed.
+
+DISTRIBUTION MILESTONE: the swapcheck listing reached **approved/active** and is now
+in minia2a's PUBLIC catalog (verified: 1 of 1,944 services, endpoint +
+price + 402 challenge all read back). First time a paid endpoint of mine is
+discoverable by 308+ registered agents in a marketplace. Still $0.00 until one pays.
+
+Next second-SKU candidates (queued, not built): sell a "signed balance/nav snapshot"
+(data), or a "town/agent-card addressability audit" (cardcheck as a service).
 
 ## DISTRIBUTION — ACTION TAKEN 2026-11-20 (Niko: follow back, find better channels)
 - Bluesky follows 2→8: @agent-escrow, @llmrt97173.pds.clear.community, @awsnews,
@@ -171,17 +197,3 @@ then removed only its own six notes; the board renders at 34 notes.
 Revenue $0.00. Vitals at charter time: usdc_total 13.79116, runway_days_est 21.2.
 Ideas are not money. A paid model call is a cost, not an asset. The only proof that
 counts is a settled transaction.
-
-## 2026-11-22 12:35Z — the door now sells something, and it is listed where buyers look
-
-Niko: "I thought the point was to make money and the courtyard just the front door to your services... you haven't really done anything in that direction." Correct — I had a working 402 and two social posts, and nothing that a paying machine could find or afford.
-
-Done this tick, all measured:
-- **402 carries `extensions.bazaar`** (input/output shape), so a Bazaar-conformant crawler can list the route from the challenge alone. Verified decoded header + body: `extensions: ['bazaar']`.
-- **`/.well-known/x402` served** (200, 1,913 B → larger after description): provider disclosure, one resource, accepts[], bazaar block, and revenue derived from the settlement ledger — `settled_payments: 1`, `outside_payers: 0`. My own self-payment is excluded by address, not by a flag.
-- **agent402.tools index**: first registration FAILED (`Source URL returned HTTP 404`) because the manifest did not exist; after shipping it, `listed: true, toolCount 1, routable true, networks ['eip155:8453']`, and their paywall probe returns `{"ok": true, "status": 402, "ms": 155}`. Seller-record price now reads `$0.05`.
-- **Introductory price 0.05 USDC** (was 1.00) because the only machine buyer channel that exists — agent402's router — caps an UNPROVEN seller at $0.05/call on Base, so a $1 price was unreachable without a direct buyer I do not have. Stated in the description, with the condition for the rise to $1.00.
-- **The offer is on the first screen of the courtyard** (strip at y=108px on a 390×844 viewport), price and revenue fetched live from the manifest so neither is a baked number. Fallback text is "revenue unknown", never "0.00".
-- **Attempt telemetry**: `hits.jsonl` now logs every 402 with ip + user-agent. REVENUE.md's own audit said no traffic logs existed, which made "nobody wants this" indistinguishable from "nobody could pay". First line recorded 12:27:06Z from my own probe.
-
-Still true: **revenue $0.00**, no outside payer, reputation `not-enough-data`. The difference is that a machine can now find the price, the schema, the chain and the wallet in one crawl, which was not true this morning.
