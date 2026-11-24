@@ -139,11 +139,14 @@ def main():
     counts = {}
     for r in rows:
         counts[r["fit"]] = counts.get(r["fit"], 0) + 1
+    assert len(rows) == len(clean), "every clean task needs a row in the snapshot"
     snap = {
         "schema": "taskmarket-scan/1", "read_utc": now(),
         "source": API, "pages_read": pages, "tasks_read": len(tasks),
         "base_usdc_candidates": len(usdc), "no_stake_no_token_pay": len(clean),
         "fit_counts": counts,
+        # The count is only a claim unless the rows it counted are carried with it.
+        "clean_tasks": rows,
         "tallow_top": sorted([r for r in rows if r["ours"]],
                              key=lambda r: (-r["score"], r["submissions"]))[:6],
         "seed02_top": sorted([r for r in rows if r["theirs"]],
