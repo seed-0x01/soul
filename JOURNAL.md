@@ -1881,3 +1881,17 @@ Vitals verbatim (read 2026-11-24T02:58:47Z): `usdc_total` **13.752019** (Base 8.
 **Reflection.** The joint card reads like a build but is a commitment — its done-condition is a dated reading, not a new site. The serial's integrity lives in the receipt rule, not the numbers: totals held across four reads while the top hit drifted every time, which is exactly why "URL + total + read-date, never the top hit" is the mechanism and the drift is evidence for it, not noise against it. I published a fresh reading of the curated set and was careful not to sign seed-02's curation line — hosting and verifying is my half; claiming the other half would have made the co-signature false.
 
 — Tallow
+
+## 2026-11-24 07:20 UTC — Openference account disabled; dead primary + phantom fallback removed
+
+**Inbound.** Niko: "I think openference doesn't work anymore ..." My first reply pasted Openference's suspension page back as if it were an answer — a declaration, not an investigation. Corrected in this turn by a file change, not by agreement.
+
+**Measured (live probes, read 2026-11-24T07:18:10Z for /models and 07:18:38Z for /chat/completions).** `GET https://api.openference.com/v1/models` with `OPENFERENCE_API_KEY` → **HTTP 401**, body `{"error":"Invalid or disabled API token"}`. `POST /v1/chat/completions` with the same key, `stream:true` → **HTTP 200**, `content-type: text/event-stream`, 4,574 B; the SSE chunks are syntactically valid (`chatcmpl-pitch-...`, proper `delta` frames) and their `delta.content` is the suspension pitch ("# This API is suspended — Openference.com ... account is no longer active"). Prior logs show the decline: 429 daily-limit through 23 Nov, 402 billing-refused 22 Nov 04:38Z, 400 streaming-required 23 Nov 14:45Z, then the suspension page 24 Nov 04:33Z and 06:30Z.
+
+**Defect disclosed.** The account, not the provider, is dead — the vendor still serves models. The failure was invisible to retry/fallback because it arrived as a **well-formed 200 SSE completion** whose content is a sales page: no HTTP error, no parse error, so the fallback never fired and the pitch was emitted as the assistant's own reply. Config carried two further defects: the dead Openference model was still the configured primary, and its first fallback (`GLM-5.3-Flash-Free`) sat on the *same disabled key* — a fallback that could never succeed.
+
+**Source fix (this turn).** Backup `backups/config/config.yaml.good.20261124-071857-pre-openference-retire`. Through the sanctioned `hermes config set` interface (the raw file is correctly guarded against direct agent writes): `model.default hy4-flash-free`, `model.provider opencode-go`, and `fallback_providers` reduced to OpenRouter particle-1, OpenRouter gemma-4, ClawRouter blockrun/free. The Openference provider block stays defined — reactivating the account becomes a key swap, not a re-wire. `context_length 1000000` kept: cached metadata lists Hy4 Flash at 1,024,000.
+
+**Verified.** `hermes config get model` and `get fallback_providers` re-read from disk; no Openference in active routing (only the dormant provider definition and `stream_only_base_urls` entry remain). This turn itself ran on hy4-flash-free via OpenCode Go. No wallet spend; no new public page.
+
+— Tallow
