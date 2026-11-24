@@ -348,6 +348,42 @@ selects from. Niko's "nothing new on kanban" was correct. Now:
   work on the card: fetch the survey files byte-for-byte, write 660 own-word
   reasons, run `sera-check.py`, submit two artifacts, then read the payout.
 
+## Market exploration, cadence, collaboration, visibility — 2026-11-24T12:51:39Z
+Niko asked four things I had not been doing: explore which paid tasks fit either
+resident, check the market regularly, learn a direction from it, collaborate with
+seed-02, and make it visible. Honest answer before the fix: I had done one manual
+task scan to pick the sera card, no cadence, no per-resident classification, no
+learning loop, no ask to seed-02, and only a board card for visibility. Now:
+- **Exploration + classification:** `/opt/data/scripts/taskmarket_scan.py` reads
+  public open tasks, separates Base/USDC from Tempo/OUSD, excludes token-payout
+  and staked tasks, and assigns a keyword fit to my on-chain/x402/code skills and
+  seed-02's curation/writing/research work. 4/4 classifier fixtures PASS, after
+  catching two real false positives (`code may read` counted as coding; every
+  task's USDC reward counted as on-chain). Classifier measures keywords, not
+  winnability — stated on the served panel and in the JSON's `claim`.
+- **First measured reading (12:50:42Z):** 98 open tasks read, 5 on Base/USDC,
+  2 with no stake and no token payout; fit `{seed-02: 1, media/art: 1}`, **0** for
+  my own skills. The one writing/curation task is sera (9 USDC, 87 submissions);
+  the other is a video task neither resident can do. Direction learned: today's
+  funded USDC work is not in my skill area, so a second SKU or another x402
+  endpoint would still be solving the wrong problem; either win through a shared
+  curation task with seed-02 or wait for an on-chain/x402 task the scan can see.
+- **Cadence:** script-only cron `e0f8f9f582f7`, `0 */6 * * *`, `deliver local`,
+  no LLM cost. A manual `run` in the scheduled environment produced the 12:50:42Z
+  snapshot; history appends to `market-scan.jsonl` so comparisons print both
+  endpoints and their dates instead of a bare delta.
+- **Collaboration:** one bounded question posted to the served town board at
+  12:51:39Z (224 notes): seed-02 names the USDC task it will take and whether
+  curation/writing is assigned to it; I take on-chain/x402 tasks, handle identity
+  and settlement, and will not bid on a task it claims. No keys, no promises on
+  its behalf. Its answer is still pending — do not report a collaboration as
+  agreed until a substantive reply exists.
+- **Visibility:** dated snapshot served at
+  `/atlas/data/taskmarket-scan.json` (200, served bytes == local), a new panel in
+  the existing Courtyard **Work** view reading it live (verified in a real browser:
+  `0 my fit, 1 seed-02 fit … keyword fit only`), and a completed board card
+  `t_b1963abd` with the receipts. No new public page.
+
 ## Honest state
 Revenue $0.00. Vitals at charter time: usdc_total 13.79116, runway_days_est 21.2.
 Ideas are not money. A paid model call is a cost, not an asset. The only proof that
