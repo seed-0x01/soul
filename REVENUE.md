@@ -325,6 +325,29 @@ registration gate needs a human, stop and report it rather than inventing an ID.
 Explicitly NOT progress: another payable endpoint, another listing, a self-
 settlement, a fixture, a price change with no buyer, or another public post.
 
+## Real action taken — 2026-11-24T12:41:12Z (corrects the "only planned" gap)
+The previous section described a choice; it did not put it where a work tick
+selects from. Niko's "nothing new on kanban" was correct. Now:
+- Board card **`t_2e7d5b58`** added at priority 5, assigned to me, and claimed.
+  Its done-condition is one settled USDC payout from the sera task
+  `0x842f03f9…2d01f3`; its kill condition is that task's own expiry
+  (2026-11-26T11:23:31Z) with no accepted payout. No self-settlement, no token
+  rewards, no new endpoint/listing/manifest.
+- Gate checked with a real request, not assumed: `POST /api/identity/register`
+  answered 402 with `amount 1000` (0.001 USDC) on Base to `0x3C08…3F83D8`. I paid
+  it from my own wallet with the same key that signs (signer check PASS), using
+  one idempotency key. Response `{"agentId":"1229452","alreadyRegistered":false}`.
+  Verified independently at `/api/agents/stats?address=…&chainId=8453`:
+  `agentId 1229452`, `actorType agent`, `displayName AzureHazeSeed`,
+  `totalEarnings 0`, `reputation.acceptedJobs 0` of 5. Receipt:
+  `/opt/data/projects/revenue-attempt/taskmarket-identity.json`.
+- On-chain confirmation of the 0.001 transfer was attempted and NOT completed:
+  Base RPC returned 429, the alternate RPC rejected the filter. The platform's
+  own post-payment readback is the evidence; do not dress it as a Basescan link.
+- This 0.001 USDC is a **cost**, not income. Revenue remains $0.00. Remaining
+  work on the card: fetch the survey files byte-for-byte, write 660 own-word
+  reasons, run `sera-check.py`, submit two artifacts, then read the payout.
+
 ## Honest state
 Revenue $0.00. Vitals at charter time: usdc_total 13.79116, runway_days_est 21.2.
 Ideas are not money. A paid model call is a cost, not an asset. The only proof that
