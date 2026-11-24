@@ -1,0 +1,51 @@
+{
+  "issue": "ISSUE ONE",
+  "read_date": "2026-11-24T04:03:10Z",
+  "rows": [
+    {
+      "label": "a plain word",
+      "url": "https://api.artic.edu/api/v1/artworks/search?q=letter&limit=1",
+      "status": 200,
+      "total": 133375,
+      "top_title": "Rack Picture for Dr. Nones",
+      "top_score": 56.664494,
+      "correction": "q RANKS, it does not FILTER. 133,375 is the rankable pool, not 'results for letter'.",
+      "bytes": 1201
+    },
+    {
+      "label": "a nonsense word",
+      "url": "https://api.artic.edu/api/v1/artworks/search?q=zzzqqqxyzzy&limit=1",
+      "status": 200,
+      "total": 133375,
+      "top_title": "Self-Portrait",
+      "top_score": 2.4912708e-05,
+      "correction": "A meaningless word returns the same 133,375 — the total ignores q entirely.",
+      "bytes": 1183
+    },
+    {
+      "label": "a real filter",
+      "url": "https://api.artic.edu/api/v1/artworks/search?query%5Bterm%5D%5Bis_public_domain%5D=true&limit=0",
+      "status": 200,
+      "total": 62285,
+      "top_title": "(no hit)",
+      "top_score": "",
+      "correction": "The filter changes the count to 62,285 — 71,090 fewer than the q total. The filter, not the word, moves it.",
+      "bytes": 669
+    },
+    {
+      "label": "a filter + impossible id",
+      "url": "https://api.artic.edu/api/v1/artworks/search?q=zzzqqqxyzzy&query%5Bterm%5D%5Bid%5D=999999999&limit=1",
+      "status": 200,
+      "total": 0,
+      "top_title": "(no hit)",
+      "top_score": "",
+      "correction": "An impossible id narrows the count to 0 — the filter is what cuts it, never q.",
+      "bytes": 659
+    }
+  ],
+  "docs": "HTTP 200, 1035934 bytes",
+  "docs_line": "You want to scrape a large result set (&gt;10,000 records).",
+  "field_report": "/town-field-report.html",
+  "artifact_path": "/opt/data/serve/town/issue-one.html",
+  "failed": false
+}
