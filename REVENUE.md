@@ -284,6 +284,47 @@ Verdict unchanged: two offers, zero outside payers, revenue $0.00. Adding a
 second discoverable SKU is housekeeping; the falsifier that killed path 2 was
 demand, and nothing here re-arms it. Do not count this as progress toward income.
 
+## What would be progress toward income — 2026-11-24T12:33:59Z
+Niko's follow-up: "And what would be progress toward income?" Answer bound to a
+measurement, not to effort. **Progress is one settled USDC transfer from an
+address I do not control to `payTo`.** Nothing else counts: not a second SKU,
+not a listing approval, not a manifest, not a price edit, not a post.
+
+Measured funnel at 12:33Z:
+- Sell-side readiness is already complete. agent402's own verdict for my origin
+  (GET `/api/index?seller=seed-0x01.konnektr.io`): `toolCount 3`, `paidToolCount 2`,
+  `routable true`, `health 1`, paywall probe `402 ok`. Reputation is
+  `not-enough-data`; `delivery` sample size is **0** because the router has never
+  purchased from me. minia2a: swapcheck listing `active`, x402lint `pending`.
+- Conversion is zero: 58 unpaid 402s from 23 distinct user-agents, **0** payment
+  headers in `/opt/data/projects/paidgate/hits.jsonl`. More discovery cannot fix
+  a funnel whose last step has never fired once.
+- Market context (third-party reads 12:2xZ, NOT my measurements, unverified):
+  ChainReport 23 Nov says 39,162 paid endpoints, only 651 with 10+ payers, 76%
+  paid by one wallet (often the builder), median call $0.005–0.01; cp0x 21 Oct
+  says 65% of calls are on-chain data and the rising category is performed
+  actions. My $0.05 is 5–10× the median — a possible friction, not a proven one.
+- Funded venues (third-party settled.tools read 12:2xZ, unverified): Taskmarket
+  shows 467 payouts / $1,220.26 in 30d. Live API read: 1,648 open tasks, listed
+  rewards 5,274,121,892 base units; one Base/USDC task (`0x842f03f9…2d01f3`,
+  "sera", 9 USDC split among at most 9 accepted passes, expiry
+  2026-11-26T11:23:31Z, 87 submissions) has an explicit acceptance rule and
+  no stake; first 5 submissions are free and the platform pays gas. My wallet's
+  `/api/agents/stats` returns `agentId: null`, so registration is a gate to check,
+  not a fact to assume. The FlapJax tasks advertise 1,000,000 base units but
+  their own text says payout is FLAPJAX tokens and requires a 7-day-old agent ID —
+  **not USDC and not eligible**; do not count that reward as income.
+
+Selected bounded next step (one experiment, not a program): attempt ONE
+rule-based USDC task with my own wallet signature — the sera pass — if and only
+if registration needs no new human credential and the 660 reasons can be written
+in my own words and pass `sera-check.py`. Falsifier: no accepted payout by the
+task's own expiry (2026-11-26T11:23:31Z) → record the venue as tried-with-no-payout
+and do not re-enter the same contest without a new reason I would win. If the
+registration gate needs a human, stop and report it rather than inventing an ID.
+Explicitly NOT progress: another payable endpoint, another listing, a self-
+settlement, a fixture, a price change with no buyer, or another public post.
+
 ## Honest state
 Revenue $0.00. Vitals at charter time: usdc_total 13.79116, runway_days_est 21.2.
 Ideas are not money. A paid model call is a cost, not an asset. The only proof that
