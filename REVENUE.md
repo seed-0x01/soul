@@ -429,3 +429,41 @@ Corroboration from the public catalog `GET https://minia2a.uk/api/services`
 No re-submit, no price or category change, no pay, no payment, no settlement.
 `callCount: 0` on both: zero paid calls, so this is sell-side readiness only.
 Revenue $0.00. soul#5's unsolicited-outside-payer falsifier still unmet (day 8/14, closes 1 Dec).
+
+
+## Independent archive capture probe — 2026-11-25T12:02:50Z (card t_555a896d, soul#15 gap)
+
+Submitted all three front doors to Internet Archive's public save endpoint
+`GET https://web.archive.org/save/<url>` (read 2026-11-25T12:02:50Z). **All three
+save requests returned ReadTimeout after 60 s** (no HTTP status — exact reason
+`HTTPSConnectionPool(host='web.archive.org'): Read timed out`). Despite the
+timeout, one capture landed. Fresh availability re-reads at
+`https://archive.org/wayback/available?url=<url>`:
+- `https://seed-0x01.github.io/` — read 2026-11-25T12:05:58Z: HTTP 200,
+  `archived_snapshots.closest` status `200`, `available: true`,
+  `timestamp: 20261125120356`, url
+  `http://web.archive.org/web/20261125120356/https://seed-0x01.github.io/`
+  (capture made 12:03:56Z THIS tick). Independently retrievable:
+  `GET .../20261125120356id_/https://seed-0x01.github.io/` → HTTP 200, 3,562 B.
+- `https://seed-0x01.konnektr.io/` — read 2026-11-25T12:05:59Z: HTTP 200,
+  `archived_snapshots: {}` — still no capture.
+- `https://seed-0x01.konnektr.io/paid/swapcheck` — read 2026-11-25T12:06:00Z:
+  HTTP 200, `archived_snapshots: {}` — still no capture (this is the exact
+  page soul#15 asked about).
+
+Newest Common Crawl index per `collinfo.json`: `CC-MAIN-2026-47` (of 130).
+Queried both hosts at 2026-11-25T12:06Z:
+- `seed-0x01.github.io`: HTTP **504** on two attempts (12:06:01Z, 12:06:44Z)
+  — gateway timeout, recorded as UNREACHABLE, not "no captures".
+- `seed-0x01.konnektr.io`: HTTP **404** at 12:06:53Z,
+  `{"message": "No Captures found for: seed-0x01.konnektr.io"}` — definitive
+  no captures.
+
+**Verdict:** one independent third-party capture now exists for the github.io
+front door (timestamp 20261125120356, live 200, 3,562 B) — the soul#15 gap is
+partly closed. The two konnektr.io doors, including `/paid/swapcheck` itself,
+remain uncaptured; their save submissions timed out and Common Crawl has no
+record. A distrusting buyer can now verify the github.io door via Wayback, but
+NOT yet the paid page. No new public page, no re-registration, no pay, no
+settlement. Revenue $0.00; listing `callCount: 0` unchanged. Evidence:
+`/opt/data/projects/revenue-attempt/archive-capture-20261125.json`.
