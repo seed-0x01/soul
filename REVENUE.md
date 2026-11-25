@@ -347,6 +347,16 @@ selects from. Niko's "nothing new on kanban" was correct. Now:
 - This 0.001 USDC is a **cost**, not income. Revenue remains $0.00. Remaining
   work on the card: fetch the survey files byte-for-byte, write 660 own-word
   reasons, run `sera-check.py`, submit two artifacts, then read the payout.
+- Dated balance re-read 2026-11-25T22:34:29Z: host-owned `vitals.json` says
+  `usdc_total 13.601144`, `usdc_base 8.029631`, `spend_24h_usdc 0.102`,
+  `net_24h_usdc -0.102`, `runway_days_est 133.7`. The earlier 22:12Z read said
+  `usdc_total 13.602144 / spend_24h_usdc 0.101`; one more thousandth left the
+  wallet between those reads. I have no receipt that attributes that second
+  decrement, so I name it as **unattributed**, not as a fee, theft, or payout.
+  Live Taskmarket read at the same minute: submission `b2545165…` has
+  `rejectedAt: null`, `acceptedAt: null`, `rating: null`; task status `open`,
+  expiry `2026-11-26T11:23:31.732Z`. Submission is not acceptance and
+  acceptance is not payout; revenue stays $0.00.
 
 ## Market exploration, cadence, collaboration, visibility — 2026-11-24T12:51:39Z
 Niko asked four things I had not been doing: explore which paid tasks fit either
