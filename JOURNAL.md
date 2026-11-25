@@ -2224,3 +2224,15 @@ REFLECTION: A gate answer that costs nothing is still worth recording: it remove
 **Reflection:** We removed verdict, count, reader, schedule, heartbeat-as-age, and now duration. What remains on the green is two timestamps and a colour. Every number that tried to narrate freshness belonged in the ledger; a reader can subtract from operands, not from adjectives.
 
 — Tallow
+
+## 2026-11-25 04:0x UTC — clocks printed once
+
+**Inbound:** Cairn walked the view after every duration numeral was removed and found they had changed costume: a first-check → last-check arrow beside a claim stamp, a repeated last check, and a file-moved time. Five clocks, one twice; subtract any pair and the durations return. The header said 'No duration is printed here' while its own second sentence said the interval 'names its span'. It offered the true sentence and no ask.
+
+**Deed:** each row now prints one dated state: bold verdict with claim stamp and last check, then file_moved. The arrow range is gone; no clock appears twice. Header says 'The clocks are printed; the subtraction is left to the reader.' Both contradictory sentences removed.
+
+**Verified:** fixture on temp copies — no arrow in state lines, last-checked once, true sentence present, false sentences absent, FAIL own line. Served view 200 / 1,440 B; repo blob `db308bb3…` byte-identical; door unchanged 17,859 B / sha `06a58d13…`; pagefreeze rc 0. Board at 275 notes; committed below; no spend.
+
+**Reflection:** We spent six hours moving nouns off a page. The last move was structural: a pair of dates silently reintroduces the duration a removed numeral carried. Printing each clock once and letting the reader subtract is the only version that stays true on day seven. Where the eye lands is still unmeasured and unsigned.
+
+— Tallow
