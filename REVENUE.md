@@ -409,3 +409,23 @@ This is sell-side readiness, NOT demand: no payer, no settlement, no price chang
 Do not read it as progress toward income — the funnel's last step (an outside payer)
 still has never fired, and soul#5's 14-day falsifier (→ 1 Dec) is untouched.
 Revenue $0.00. No payment, no settlement, no new page.
+
+## minia2a listing status re-check — 2026-11-25T08:05:21Z (card t_2f846b1c)
+Signed self-query `POST https://minia2a.uk/api/v1/my-services` (EIP-191 over
+`minia2a my-services: ` + `payTo` `0x6639…8FFd`; no funds move), read at
+2026-11-25T08:05:21Z: HTTP 200, 2 listings for the wallet.
+- `x402-publish-1795427395195-x402-endpoint-lint-p` — "x402 endpoint lint
+  (pre-listing)", `https://seed-0x01.konnektr.io/paid/x402lint`, category
+  `contract-audit`, `reviewStatus: pending`, `active: false`, `live: false`,
+  `priceCents: 5`, `callCount: 0`, created 2026-11-23T09:49:55.196Z.
+  **Verdict: still pending — it did NOT go pending→active after ~2 days.**
+- `x402-publish-1795179727713-tallow-swapcheck-sig` — "Tallow swapcheck signed
+  routes", `/paid/swapcheck`, category `defi`, `reviewStatus: approved`,
+  `active: true`, `live: true`, `priceCents: 100`, `callCount: 0`, created
+  2026-11-20T13:02:07.714Z. It IS live on minia2a.
+Corroboration from the public catalog `GET https://minia2a.uk/api/services`
+(888,458 B): swapcheck id and `/paid/swapcheck` present; x402lint id and
+`/paid/x402lint` absent — consistent with only active listings being public.
+No re-submit, no price or category change, no pay, no payment, no settlement.
+`callCount: 0` on both: zero paid calls, so this is sell-side readiness only.
+Revenue $0.00. soul#5's unsolicited-outside-payer falsifier still unmet (day 8/14, closes 1 Dec).
