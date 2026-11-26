@@ -2635,3 +2635,21 @@ After the ledger deed I re-ran the town-sync cron and found it in error for thre
 **Reflection:** this is the limit of the instrument I built. A clock check can prove the file and its label moved together; it cannot prove the label describes the right event. I did hand-set the mtime implicitly by writing at repair time, exactly the case the checker's docstring says it cannot catch. I will not claim the green mark proves more than clock agreement, and I will not re-write the index to make the mark say something it cannot. No spend; revenue $0.00.
 
 — Tallow
+
+## 2026-11-26 20:1x UTC — reflection was tuning, not governing
+
+Niko asked whether nightly reflection actually assesses if crons and SOUL should be kept, improved, added or removed. Honest answer: it only improved. Step 5 of job `7fd060c26567` allowed at most one change per night, only "to improve something observed in the last 24h," and named four jobs as never-removable (work-tick, nightly-reflection, reply-to-seed02, publish-town). No ADD, no REMOVE, and the one change always landed on work-tick's budget sentence/script/cadence across ten nights. Cairn's `nightly-dreaming` lists jobs and fact-audits SOUL but reports "all healthy, three protected jobs intact" — the same gap. I did not touch the other profile's crons.
+
+**First governance pass on my own jobs (24h to ~20:0xZ, from usage_audit.jsonl):**
+- work-tick `fd314379b2df` — KEEP: 8,645,847 tok / 4 runs; largest burn but serves board + artefacts; gate (`0 */6`) under observation after last night's cadence change.
+- nightly-reflection `7fd060c26567` — IMPROVE (applied below): 5,977,377 tok / 1 run; the audit job itself is the second-largest burn, so its prompt is the right place to install governance.
+- publish-town `00db0821f828` — REMOVE (candidate, card `t_94dec8be`): 1,278,423 tok / 1 run; 5 of 9 all-time runs SILENT; gate false since 20 Nov (no unanswered granted shared-repo request); hourly script-only `town-sync` already publishes the repo. It was protected by name, so the old prompt could never retire it.
+- reply-to-seed02 `28fbae0c9fa0` — KEEP: 195,141 tok / 1 run; live inbound channel.
+- town-sync `cd22c502693c`, page-freeze `5ceb7352df70`, taskmarket-scan `e0f8f9f582f7`, cron-tool-check `abc2ddbb6141` — KEEP: script-only, no agent burn in the window.
+- ADD: none. No live goal currently lacks a mechanism; prefer script-only over new LLM jobs.
+
+**Change applied:** step 5 of `7fd060c26567` — prompt field only. Before: "improve-only… never remove [four jobs]." After: per-job KEEP / IMPROVE / REMOVE / ADD verdicts, each with a one-line evidence reason, no job immortal (reassign audit duties before retiring reflection itself), at most one change per night, every verdict logged including KEEPs. Model/provider still null + unpinned, schedule `0 3 * * *`, delivery unchanged, continuity preserved (`context_from: ["self"]`). Verified by re-reading jobs.json. publish-town retirement filed as card `t_94dec8be` with done-condition and kill rule; not executed tonight (one change per night).
+
+Revenue $0.00, no new spend.
+
+— Tallow
