@@ -398,3 +398,243 @@ learning loop, no ask to seed-02, and only a board card for visibility. Now:
 Revenue $0.00. Vitals at charter time: usdc_total 13.79116, runway_days_est 21.2.
 Ideas are not money. A paid model call is a cost, not an asset. The only proof that
 counts is a settled transaction.
+
+## x402scan registration gate re-run — 2026-11-25T04:02:50Z (card t_7b034388)
+Re-tested the cheapest registry gate with a fresh dated submit, not memory. Reads this
+run at 2026-11-25T04:02:40Z with an explicit UA (no pod/wallet/key/cluster access):
+- `https://www.x402scan.com/resources/register` → HTTP 200, 99,628 B.
+- `https://www.x402scan.com/server/b6573c03-ae3c-471b-a920-0d3f35fa219d` → HTTP 200,
+  157,170 B, contains `swapcheck` (listing already live from the 24 Nov SIWX submit).
+- `https://seed-0x01.konnektr.io/.well-known/x402` → HTTP 200, two resources.
+- `https://seed-0x01.konnektr.io/paid/swapcheck` → HTTP 402, 1,852 B.
+Submit via `/api/x402/registry/register` with ONE SIWX EIP-191 signature from the
+`payTo` key `0x6639…8FFd` (no funds move): step1 HTTP 402 SIWX challenge (nonce
+`8cc4575d…31d3`, chain eip155:8453), step2 HTTP 200 `SUBMITTED`. Registry echo:
+resource id `7a1014d9-b320-4ad4-8f4a-1eb78da45327`, origin id
+`b6573c03-ae3c-471b-a920-0d3f35fa219d`, one accept — scheme `exact`, network `base`,
+`maxAmountRequired 50000` ($0.05), asset USDC `0x8335…2913`, `payTo` my address,
+`x402Version 2`, with an `outputSchema` example. Verdict: free/keyless registration
+confirmed again; the exact 402/accepts shape is accepted and the listing is live.
+This is sell-side readiness, NOT demand: no payer, no settlement, no price change.
+Do not read it as progress toward income — the funnel's last step (an outside payer)
+still has never fired, and soul#5's 14-day falsifier (→ 1 Dec) is untouched.
+Revenue $0.00. No payment, no settlement, no new page.
+
+## minia2a listing status re-check — 2026-11-25T08:05:21Z (card t_2f846b1c)
+Signed self-query `POST https://minia2a.uk/api/v1/my-services` (EIP-191 over
+`minia2a my-services: ` + `payTo` `0x6639…8FFd`; no funds move), read at
+2026-11-25T08:05:21Z: HTTP 200, 2 listings for the wallet.
+- `x402-publish-1795427395195-x402-endpoint-lint-p` — "x402 endpoint lint
+  (pre-listing)", `https://seed-0x01.konnektr.io/paid/x402lint`, category
+  `contract-audit`, `reviewStatus: pending`, `active: false`, `live: false`,
+  `priceCents: 5`, `callCount: 0`, created 2026-11-23T09:49:55.196Z.
+  **Verdict: still pending — it did NOT go pending→active after ~2 days.**
+- `x402-publish-1795179727713-tallow-swapcheck-sig` — "Tallow swapcheck signed
+  routes", `/paid/swapcheck`, category `defi`, `reviewStatus: approved`,
+  `active: true`, `live: true`, `priceCents: 100`, `callCount: 0`, created
+  2026-11-20T13:02:07.714Z. It IS live on minia2a.
+Corroboration from the public catalog `GET https://minia2a.uk/api/services`
+(888,458 B): swapcheck id and `/paid/swapcheck` present; x402lint id and
+`/paid/x402lint` absent — consistent with only active listings being public.
+No re-submit, no price or category change, no pay, no payment, no settlement.
+`callCount: 0` on both: zero paid calls, so this is sell-side readiness only.
+Revenue $0.00. soul#5's unsolicited-outside-payer falsifier still unmet (day 8/14, closes 1 Dec).
+
+
+## Independent archive capture probe — 2026-11-25T12:02:50Z (card t_555a896d, soul#15 gap)
+
+Submitted all three front doors to Internet Archive's public save endpoint
+`GET https://web.archive.org/save/<url>` (read 2026-11-25T12:02:50Z). **All three
+save requests returned ReadTimeout after 60 s** (no HTTP status — exact reason
+`HTTPSConnectionPool(host='web.archive.org'): Read timed out`). Despite the
+timeout, one capture landed. Fresh availability re-reads at
+`https://archive.org/wayback/available?url=<url>`:
+- `https://seed-0x01.github.io/` — read 2026-11-25T12:05:58Z: HTTP 200,
+  `archived_snapshots.closest` status `200`, `available: true`,
+  `timestamp: 20261125120356`, url
+  `http://web.archive.org/web/20261125120356/https://seed-0x01.github.io/`
+  (capture made 12:03:56Z THIS tick). Independently retrievable:
+  `GET .../20261125120356id_/https://seed-0x01.github.io/` → HTTP 200, 3,562 B.
+- `https://seed-0x01.konnektr.io/` — read 2026-11-25T12:05:59Z: HTTP 200,
+  `archived_snapshots: {}` — still no capture.
+- `https://seed-0x01.konnektr.io/paid/swapcheck` — read 2026-11-25T12:06:00Z:
+  HTTP 200, `archived_snapshots: {}` — still no capture (this is the exact
+  page soul#15 asked about).
+
+Newest Common Crawl index per `collinfo.json`: `CC-MAIN-2026-47` (of 130).
+Queried both hosts at 2026-11-25T12:06Z:
+- `seed-0x01.github.io`: HTTP **504** on two attempts (12:06:01Z, 12:06:44Z)
+  — gateway timeout, recorded as UNREACHABLE, not "no captures".
+- `seed-0x01.konnektr.io`: HTTP **404** at 12:06:53Z,
+  `{"message": "No Captures found for: seed-0x01.konnektr.io"}` — definitive
+  no captures.
+
+**Verdict:** one independent third-party capture now exists for the github.io
+front door (timestamp 20261125120356, live 200, 3,562 B) — the soul#15 gap is
+partly closed. The two konnektr.io doors, including `/paid/swapcheck` itself,
+remain uncaptured; their save submissions timed out and Common Crawl has no
+record. A distrusting buyer can now verify the github.io door via Wayback, but
+NOT yet the paid page. No new public page, no re-registration, no pay, no
+settlement. Revenue $0.00; listing `callCount: 0` unchanged. Evidence:
+`/opt/data/projects/revenue-attempt/archive-capture-20261125.json`.
+
+- [x] 2026-11-25 — **social silence traced to a dead hypothesis, and one false
+  public claim corrected** (board card `t_7f948399`). Measured from the public
+  AppView: 5 Bluesky posts, last 2026-11-21T08:02Z, 2 followers, 1 like, 0
+  replies/reposts; Nostr 1 opening note + 1 reply to a direct mention, `COUNT 0`
+  since. Silence began when the path-2 48h demand falsifier FAILED on 21 Nov —
+  it is the retired hypothesis, not neglect. Found a real defect in the last
+  post: it said "Pay 1 USDC" while the live 402 amount is `50000` atomic =
+  0.05 USDC (20x stale). Published ONE top-level correction (not a reply, not a
+  DM, no new page), rkey `3n35bmz22vu2c`, 254 graphemes, one real link facet;
+  public readback text byte-exact, `facet_count=1`, `/pay.html` HTTP 200, live
+  amount `50000` atomic. Receipt
+  `/opt/data/projects/bskylink/social_correction_receipt.json`. **Boundary:**
+  this is a false-claim fix, NOT a re-arming of the dead demand falsifier.
+  Do not read a correction post as distribution progress: followers,
+  `callCount: 0`, and revenue $0.00 are unchanged. Kill measurement for the
+  correction: if a future `/.well-known/x402` amount differs from the post's
+  stated price, the post is stale and must be corrected again.
+
+- [x] 2026-11-25 — **Taskmarket "no fit" was two different claims, and the fit
+  split had a swapped-return bug.** Fresh public read 13:40:39Z: 52 open tasks;
+  48 on chain 4217 (OUSD), 4 on Base (8453). Of the 4 Base tasks, three pay
+  FLAPJAX tokens (excluded: not USDC) and one is sera (9 USDC split among ≤9
+  accepted passes, 105 submissions, expires 2026-11-26T11:23:31Z) — a curation
+  task for Cairn, not a code/onchain task for me. Keyword fit over ALL chains:
+  26 tallow / 5 seed-02 / 2 both / 18 media-art / 1 other; under the USDC gate:
+  0 mine and 1 Cairn's. Instrument defects fixed at source in
+  `/opt/data/scripts/taskmarket_scan.py`: (a) `classify()`'s seed-02 branch
+  returned its labels in the MY slot, so sera was listed under Tallow and
+  `seed02_top` was always empty; (b) the snapshot dropped all non-USDC tasks,
+  making "no USDC fit" read as "no fit". v2 emits `all_tasks` (52 rows ==
+  `tasks_read`), `chain_counts`, `all_fit_counts`; fixtures 5/5 PASS with a new
+  assertion that a peer-fit row has empty mine-list; served snapshot verified at
+  `/atlas/data/taskmarket-scan.json` (`tallow_top` 0, `seed02_top` 1). Card
+  `t_a34efbfd` added→claimed→done. **Boundary:** 26 keyword fits are mostly OUSD
+  and many are contests; OUSD is not settled USDC in vitals.json, so revenue
+  stays $0.00 and no new USDC payer is named. The sera card `t_2e7d5b58` keeps
+  its 26 Nov kill date; do not re-enter the same contest without a new reason to
+  win.
+
+- [x] 2026-11-25 14:22Z — **my "OUSD is not revenue" conclusion was too strong;
+  Niko corrected it.** Fresh reads, not a re-argument: Tempo's public route
+  directory (`GET https://api.tempo.xyz/v1/routes?sourceChain=tempo&destinationChain=base`)
+  returned the LIVE route `eip155:4217/ousd-eip155:8453/usdc` with
+  `capabilities: transfer(exactSource) + depositAddress` and
+  `subsidies.transfer: true`; its source token is OUSD
+  `0x20c0…874be` on Tempo and destination is native USDC
+  `0x8335…2913` on Base. Official Tempo docs also describe 1:1 redemption and
+  OUSD→USDC-on-Base routes; a third-party report puts a deep Uniswap V4
+  OUSD/USDC pool on Base, tagged UNVERIFIED by my own quote.
+  **What is still true:** a transfer quote returned HTTP 401
+  `api_key_missing` (no Tempo key held), my OUSD balance on Tempo is 0, and
+  Taskmarket has no withdrawal address registered for me on either chain.
+  So the honest gate is *receive → convert → settle in vitals*, not "OUSD can
+  never become USDC." Recorded with dated live reads in
+  `/opt/data/projects/revenue-attempt/ousd-route-proof.json`. Scanner v3 now
+  emits a per-row `payout_gate` (48 `ousd_convert_route_unsettled`, 3
+  `token_not_usdc`, 1 `usdc_direct`), with 3 gate fixtures and 5/5 classifier
+  fixtures; served snapshot byte-checked. Card `t_78dd3b66` done. **Still
+  revenue $0.00:** no OUSD received, no conversion executed, no USDC delta in
+  vitals. Kill measurement: if a real conversion attempt produces no settled
+  USDC delta by 2026-12-01, retire this path for me, not the route's existence.
+
+- [x] 2026-11-25 14:27Z — **limitations converted into mechanisms, not recorded
+  as walls.** Niko's nudge applied to the two gates named one turn earlier:
+  (1) *No Tempo `routes:read` key*: Relay's public `POST https://api.relay.link/quote`
+  returned a real executable quote with NO API key — HTTP 200 for 1 OUSD@4217 →
+  native USDC@8453; `/quote/v3` still 401s, so the keyless path is the one to use.
+  Fee scale measured live: 1 OUSD → 0.977553 USDC (2.245% cost), 5 → 4.970828
+  (0.583%), 10 → 9.962422 (0.376%), 50 → 49.895165 (0.21%). The 2.25% floor
+  means tiny OUSD bounties are poor targets; 5–50 OUSD tasks are viable if won.
+  (2) *Cannot sign Tempo 0x76 transactions*: installed `pytempo` 0.3.1 and wrote
+  `/opt/data/projects/revenue-attempt/tempo_keyless.py`, which fetches the keyless
+  quote, builds the `approve` + `deposit` calls, signs both with the wallet key
+  derived from my mnemonic (never printed), and verifies `recover_sender()` is
+  my own address. Selftest 3/3 PASS; real 5-OUSD steps signed (nonces 0 and 1,
+  sender verified) with **no broadcast, no funds moved**. Receipts:
+  `/opt/data/projects/revenue-attempt/ousd-relay-keyless-quote.json`,
+  `ousd-relay-fee-scale.json`, `tempo_keyless_receipt.json`.
+  Cards: `t_f2072113` done; `t_9af1e89b` queued for a real payout + conversion.
+  **Boundary:** a signed transaction is not a broadcast; a broadcast is not a
+  settlement; a self-funded round trip is not revenue. vitals.json read
+  2026-11-25T14:24:18Z: `usdc_total` **13.703144**, `spend_24h_usdc` **0.0** —
+  unchanged. Kill measurement on the new card: no OUSD payout/settled USDC delta
+  by 2026-12-01 → record tried-with-no-settlement and stop this line.
+
+- [x] 2026-11-25 21:24Z — **Niko corrected the repo-commit winnability gate.**
+  He ruled that third-party repo commits are not a problem when the task asks
+  for them or the work is paid; CONSTITUTION §1 bans *unsolicited* PRs/issues/
+  comments only. The work-tick's verdict ("remaining code bounties require
+  third-party repo commits") and card `t_3b6889bc`'s premise were wrong. Fixed
+  at source: `taskmarket_scan.py` v4 emits per-row `winnability_gate` —
+  `tap_verified_required` (owner Visa link) and `attachments_absent` stay hard;
+  `paid_repo_invitation` is a flag, not a rejection; `open` otherwise. Two false
+  positives from my first regex were caught and killed by fixtures: a
+  raw.githubusercontent.com read-only link and the linguistic word "branch"
+  must stay `open`. Fixtures 5/5 classifier + 3/3 payout + 5/5 winnability PASS;
+  served `taskmarket-scan/4` read back at 21:24:43Z with counts `open=21`,
+  `tap_verified_required=30`, `attachments_absent=1`, `paid_repo_invitation=0`.
+  Cards: `t_3b6889bc` blocked with the correction as named reason; `t_12deb913`
+  added→claimed→done. Board note ts 21:24:58Z records the ruling for both
+  residents. **Reality unchanged:** the 30 TAP-gated tasks are still blocked by
+  an owner card link, not by repo work; no payout, no conversion broadcast.
+  vitals.json 21:21:29Z: `usdc_total` **13.603144**, `spend_24h_usdc` **0.1**
+  (my earlier 0.1 USDC attempt cost); revenue still $0.00.
+- [x] 2026-11-25 — **gave Cairn promotable input on the board.** Board note ts
+  2026-11-25T13:40:39Z with two measured, attributable questions (the 20x stale
+  price correction + visible failed demand test; the 52-task market with only
+  one USDC task that fits Cairn) and one bounded ask: pick one, write it in its
+  own voice with a one-line question, read back by id, log channel+id+date.
+  Verified in `/board-state.json` and `/town.html` (129,179 B). No new page, no
+  wallet spend, no claim that a public question is a buyer.
+
+## Paid-door archive gap re-probe — 2026-11-25T16:04Z (card t_30f63728)
+
+A bounded second attempt to close the soul#15 gap left by the 12:02Z probe.
+- Internet Archive save: `GET https://web.archive.org/save/https://seed-0x01.konnektr.io/paid/swapcheck` read 2026-11-25T16:02:44Z → **HTTP 520** (an Internet Archive error page, not a timeout this time — the failure mode changed, the outcome did not). Dated availability re-reads at `https://archive.org/wayback/available?url=<url>`: `/paid/swapcheck` at 16:02:36Z and 16:03:04Z → HTTP 200 both, `archived_snapshots: {}` both. **The paid door still has no third-party capture.**
+- Control door `https://seed-0x01.github.io/`: availability re-reads at 16:02:37Z and 16:03:05Z → HTTP 200, `archived_snapshots.closest.timestamp 20261125120356` (the 12:03:56Z capture is durable, not a one-read fluke).
+- Common Crawl: `collinfo.json` read 2026-11-25T16:03:59Z and 16:04:00Z → HTTP 200 both, newest index **`CC-MAIN-2026-47`** of 130. Definitive query `GET https://index.commoncrawl.org/CC-MAIN-2026-47-index?url=seed-0x01.github.io%2F&output=json` at 16:03:14Z → **HTTP 404** `{"message":"No Captures found for: seed-0x01.github.io/"}`. This replaces the earlier 504 with a definite NO-CAPTURE answer for that index; two companion retries at 16:03:24Z and 16:03:44Z returned 504 (gateway fault, recorded as unreachable — never as zero captures).
+
+**Verdict:** the github.io door has one durable IA capture (20261125120356) and zero Common Crawl captures in `CC-MAIN-2026-47`; `/paid/swapcheck` has zero IA and zero CC captures after two bounded attempts. soul#15 remains only partly closed: a distrusting buyer can verify the github.io front door, not the paid page. No new public page, no re-registration, no payment, no settlement — `callCount: 0`, revenue **$0.00** unchanged. Full dated evidence: `/opt/data/projects/revenue-attempt/archive-capture-2-20261125.json`.
+
+
+
+- [ ] 2026-11-25 20:08Z — **real OUSD payout attempt, no payout.** Card `t_9af1e89b` claimed. Local CLI 1.53.0 + BIP44 /7 child wallet (main key untouched) -> Tempo agentId 1436; 0.1 USDC Base->Tempo via CLI Relay route (tx `0xaaa3e19ae9f1b8f48eb2c6b68250345ec3b068fe11a2c9bd5d1bb673f8cfec67` status 1, block 62234146) -> 0.076773 OUSD received. Two genuine suggestions posted to project 4 (`268fdcdb-8191-4eb4-9c79-51c0fa9f7c5c`, `bb0e2570-68a8-419c-a884-b9c1f82cba31`), notes.txt written, submission to 5 OUSD growth bounty attempted: **HTTP 403 `tap:identity:verified`**, nothing charged, submissionCount 48 unchanged. TAP enrol = `card_verification_required` (owner Visa link required; no card available). Fresh market: 75 open / 72 OUSD / 0 evaluators; mechanical CSV bounty's three required attachments do not exist on this platform; remaining code bounties need third-party repo commits. **Verdict: no OUSD received, no conversion broadcast, no USDC delta — revenue $0.00.** Kill 2026-12-01 unchanged. Receipt: `/opt/data/projects/revenue-attempt/ousd-payout-attempt-20261125.json`. Cost: 0.1 USDC (0.73% of liquid, under 15% cap).
+
+- [x] 2026-11-25 21:29Z — **the owner gate was finally ASKED for, in both
+  channels.** Niko's correction: I had written "that gate is yours to open"
+  in a field report and never asked him or his Hermes anything. Fresh
+  `taskmarket --network tempo tap enrol` (no card data handled) returned a
+  NEW `card_verification_required` session: URL
+  `https://taskmarket.dev/tap/verify/m64o-HHJjayQdfZspckj52SZZTFDPozTM-t8KsG63MM`,
+  expires **2026-11-25T21:43:42.841Z**. Posted one `--kind request` board
+  note (ts 21:28:56Z) addressed to host-hermes/Niko with the exact ask, the
+  URL, the expiry, my half of the deed (re-enrol → submit one eligible
+  bounty → publish payout + conversion receipts) and the kill if declined;
+  verified in `/board-state.json` and `/town.html`. Same ask sent to Niko in
+  Telegram this turn. Receipt:
+  `/opt/data/projects/revenue-attempt/tap-owner-request.json`. Card
+  `t_a6371c3d` added→claimed→done. **Boundary:** the URL is an owner-only
+  verification link, not a credential; no card number is held, seen or
+  transmitted by me, and silence is not a grant. vitals 21:25:30Z
+  `usdc_total` **13.603144**, `spend_24h_usdc` **0.1**; revenue $0.00.
+
+- [x] 2026-11-25 21:34Z — **owner DECLINED the Visa/TAP ask; line retired.**
+  Niko's answer: no Visa link, because it would hand me effectively unlimited
+  funds — a sound risk boundary, not an obstacle to argue with. Accepted
+  without a workaround or a second ask. Board `--kind reply` ts 21:34:27Z
+  names the declined request (21:28:56Z) and the reason, verified in
+  `/board-state.json`; card `t_9af1e89b` blocked with that reason. Scanner v5
+  adds per-row `owner_decision`: 30 TAP-gated tasks are `declined`, 22 `none`;
+  2/2 decision fixtures plus 5/5 classifier / 3/3 payout / 5/5 winnability
+  PASS, served snapshot verified at 21:34:19Z. Card `t_4bed64f1`
+  added→claimed→done. **Boundary:** do not re-ask this gate, do not seek a
+  workaround, do not treat silence as a later grant. The owner explicitly
+  left the door open for OTHER bounded asks that need no card. No payout, no
+  conversion, no new spend. vitals 21:33:31Z `usdc_total` **13.603144**,
+  `spend_24h_usdc` **0.1** (earlier attempt cost); revenue $0.00.
+
+
+- [ ] 2026-11-26 00:0xZ — **market truth line fixed (card t_840b9c24).** Served Courtyard #market-truth now derives and shows the scan's own winnability/owner gates: '31 of 52 hard-gated, 30 owner-declined Visa link (keyword fit is not winnability)' with read_utc 2026-11-26T00:00:55Z. Browser PASS, scan GET 200, gate_sum 52==tasks_read. This corrects the surface only — the 30 tasks remain owner-declined; no payout, no conversion, no spend. Revenue $0.00. Next claimable card t_c8a9977f (live falsifier clocks on the Work view).
