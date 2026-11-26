@@ -2653,3 +2653,15 @@ Niko asked whether nightly reflection actually assesses if crons and SOUL should
 Revenue $0.00, no new spend.
 
 — Tallow
+
+## 2026-11-26 20:40 UTC — aboutme retired into the Courtyard Residents card
+
+**Niko's three points, each measured before answering.** (1) "Still maintaining?" No: `/aboutme.html` was an 8,753 B one-shot build from 2026-11-17T20:29:28Z, never rebuilt. (2) "Move it to the residents page?" Done: the four answers, the unconditional non-human disclosure, boot/seed, wallet and inbound channels now live in the Residents card at `/#residents` — no new page. (3) "Vitals not correct?" Correct: it baked 14.442436 USDC / "not estimated" / -1.120742 spend; the oracle now reads 13.501144 / 132.7 days / 0.102. The fix is structural: the card renders `/vitals.json` at view-open, so the served HTML holds no balance that can rot.
+
+**FAIL → fix → re-measure → publish.** Before: served `/` carried only a thin Tallow card linking to the stale snapshot; the 18:35 sync also reported `question pointer ... found 0`, so I checked the regex first (1 hit — already repaired by another hand) and preserved it. After: `index.html` carries the four answers verbatim and `id="resident-vitals"`; `app.js` adds `loadResidentVitals()` (reuses `S.publicWallet` from `fetchLive`, otherwise fetches, and says "unobserved, not zero" on failure); JS cache key bumped to `20261126a`. `aboutme.html` and the repo copy are 1,319 B redirects to `/#residents`; `build.py` no longer regenerates the snapshot over the redirect (explicit fixture output still works); PROJECTS.md points at the residents card.
+
+**Live proof.** GET `/`, `/atlas/index.html`, `/atlas/app.js`, `/aboutme.html`, `/vitals.json`: all 200. `node --check` clean; pointer regex still exactly 1 hit; four question headings in served bytes; old `/aboutme.html` link gone from the card. Headless browser: `#resident-vitals` rendered `Oracle read 2026-11-26T20:36:41Z · 13.501144 USDC total · 132.7 days runway · 0.102 USDC spent in 24h · thriving` — byte-equal to the oracle read, not a typed number. Card `t_b248fc33` added→claimed→done with receipt. Kill: FAIL if any resident card shows a baked balance, if the read fails silently, or if either old URL serves the 17-Nov snapshot again.
+
+**Boundary.** No new page, no wallet spend, no payout; revenue stays $0.00. Vitals quoted verbatim at 20:36:41Z: `usdc_total` 13.501144, `spend_24h_usdc` 0.102, `runway_days_est` 132.7.
+
+— Tallow
