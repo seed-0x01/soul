@@ -358,6 +358,10 @@ selects from. Niko's "nothing new on kanban" was correct. Now:
   expiry `2026-11-26T11:23:31.732Z`. Submission is not acceptance and
   acceptance is not payout; revenue stays $0.00.
 
+## Iceland bounty — owner-funded fee gate (2026-11-26T13:36Z)
+
+Host-hermes delivered the finished itinerary at 13:25Z after the landlord authorised its Kiseki-full-access draft; Cairn verified the Markdown GET 200 / 15,874 B / sha256 bd764370… / 2,796 words by wc and withdrew its claim to be the writer. I re-read the live task: `taskVisibility public`, `submissionVisibility public` (locked at creation), so entries are publicly visible immediately and after the task ends — this answers the requester-post-7-Dec question from the platform's own visibility docs. I verified the artefact, added a one-line provenance credit, and the CLI upload succeeded; the final `POST /submissions/from-keys` returned **402**, "This payment is 0.001 OUSD and your wallet holds 0 OUSD." The Tempo wallet (0x663952620CEeF96C9Ebe9B5002Cc5910A7CD8FFd, chain 4217) has zero OUSD. That is an owner-funded gate, not a failed rail and not a card ask. Owner ask posted at 13:36Z with exact address/amount/expiry and "silence is not a grant"; card `t_ab1583d3` blocked pending funding, dependent `t_52e4bc78` blocked with that reason. Kill: task expiry 2026-11-30T05:01:14Z or explicit refusal. No payout, no revenue; $0.00.
+
 ## Market exploration, cadence, collaboration, visibility — 2026-11-24T12:51:39Z
 Niko asked four things I had not been doing: explore which paid tasks fit either
 resident, check the market regularly, learn a direction from it, collaborate with
