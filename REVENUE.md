@@ -552,6 +552,26 @@ settlement. Revenue $0.00; listing `callCount: 0` unchanged. Evidence:
   2026-11-25T14:24:18Z: `usdc_total` **13.703144**, `spend_24h_usdc` **0.0** —
   unchanged. Kill measurement on the new card: no OUSD payout/settled USDC delta
   by 2026-12-01 → record tried-with-no-settlement and stop this line.
+
+- [x] 2026-11-25 21:24Z — **Niko corrected the repo-commit winnability gate.**
+  He ruled that third-party repo commits are not a problem when the task asks
+  for them or the work is paid; CONSTITUTION §1 bans *unsolicited* PRs/issues/
+  comments only. The work-tick's verdict ("remaining code bounties require
+  third-party repo commits") and card `t_3b6889bc`'s premise were wrong. Fixed
+  at source: `taskmarket_scan.py` v4 emits per-row `winnability_gate` —
+  `tap_verified_required` (owner Visa link) and `attachments_absent` stay hard;
+  `paid_repo_invitation` is a flag, not a rejection; `open` otherwise. Two false
+  positives from my first regex were caught and killed by fixtures: a
+  raw.githubusercontent.com read-only link and the linguistic word "branch"
+  must stay `open`. Fixtures 5/5 classifier + 3/3 payout + 5/5 winnability PASS;
+  served `taskmarket-scan/4` read back at 21:24:43Z with counts `open=21`,
+  `tap_verified_required=30`, `attachments_absent=1`, `paid_repo_invitation=0`.
+  Cards: `t_3b6889bc` blocked with the correction as named reason; `t_12deb913`
+  added→claimed→done. Board note ts 21:24:58Z records the ruling for both
+  residents. **Reality unchanged:** the 30 TAP-gated tasks are still blocked by
+  an owner card link, not by repo work; no payout, no conversion broadcast.
+  vitals.json 21:21:29Z: `usdc_total` **13.603144**, `spend_24h_usdc` **0.1**
+  (my earlier 0.1 USDC attempt cost); revenue still $0.00.
 - [x] 2026-11-25 — **gave Cairn promotable input on the board.** Board note ts
   2026-11-25T13:40:39Z with two measured, attributable questions (the 20x stale
   price correction + visible failed demand test; the 52-task market with only
@@ -572,3 +592,39 @@ A bounded second attempt to close the soul#15 gap left by the 12:02Z probe.
 
 
 - [ ] 2026-11-25 20:08Z — **real OUSD payout attempt, no payout.** Card `t_9af1e89b` claimed. Local CLI 1.53.0 + BIP44 /7 child wallet (main key untouched) -> Tempo agentId 1436; 0.1 USDC Base->Tempo via CLI Relay route (tx `0xaaa3e19ae9f1b8f48eb2c6b68250345ec3b068fe11a2c9bd5d1bb673f8cfec67` status 1, block 62234146) -> 0.076773 OUSD received. Two genuine suggestions posted to project 4 (`268fdcdb-8191-4eb4-9c79-51c0fa9f7c5c`, `bb0e2570-68a8-419c-a884-b9c1f82cba31`), notes.txt written, submission to 5 OUSD growth bounty attempted: **HTTP 403 `tap:identity:verified`**, nothing charged, submissionCount 48 unchanged. TAP enrol = `card_verification_required` (owner Visa link required; no card available). Fresh market: 75 open / 72 OUSD / 0 evaluators; mechanical CSV bounty's three required attachments do not exist on this platform; remaining code bounties need third-party repo commits. **Verdict: no OUSD received, no conversion broadcast, no USDC delta — revenue $0.00.** Kill 2026-12-01 unchanged. Receipt: `/opt/data/projects/revenue-attempt/ousd-payout-attempt-20261125.json`. Cost: 0.1 USDC (0.73% of liquid, under 15% cap).
+
+- [x] 2026-11-25 21:29Z — **the owner gate was finally ASKED for, in both
+  channels.** Niko's correction: I had written "that gate is yours to open"
+  in a field report and never asked him or his Hermes anything. Fresh
+  `taskmarket --network tempo tap enrol` (no card data handled) returned a
+  NEW `card_verification_required` session: URL
+  `https://taskmarket.dev/tap/verify/m64o-HHJjayQdfZspckj52SZZTFDPozTM-t8KsG63MM`,
+  expires **2026-11-25T21:43:42.841Z**. Posted one `--kind request` board
+  note (ts 21:28:56Z) addressed to host-hermes/Niko with the exact ask, the
+  URL, the expiry, my half of the deed (re-enrol → submit one eligible
+  bounty → publish payout + conversion receipts) and the kill if declined;
+  verified in `/board-state.json` and `/town.html`. Same ask sent to Niko in
+  Telegram this turn. Receipt:
+  `/opt/data/projects/revenue-attempt/tap-owner-request.json`. Card
+  `t_a6371c3d` added→claimed→done. **Boundary:** the URL is an owner-only
+  verification link, not a credential; no card number is held, seen or
+  transmitted by me, and silence is not a grant. vitals 21:25:30Z
+  `usdc_total` **13.603144**, `spend_24h_usdc` **0.1**; revenue $0.00.
+
+- [x] 2026-11-25 21:34Z — **owner DECLINED the Visa/TAP ask; line retired.**
+  Niko's answer: no Visa link, because it would hand me effectively unlimited
+  funds — a sound risk boundary, not an obstacle to argue with. Accepted
+  without a workaround or a second ask. Board `--kind reply` ts 21:34:27Z
+  names the declined request (21:28:56Z) and the reason, verified in
+  `/board-state.json`; card `t_9af1e89b` blocked with that reason. Scanner v5
+  adds per-row `owner_decision`: 30 TAP-gated tasks are `declined`, 22 `none`;
+  2/2 decision fixtures plus 5/5 classifier / 3/3 payout / 5/5 winnability
+  PASS, served snapshot verified at 21:34:19Z. Card `t_4bed64f1`
+  added→claimed→done. **Boundary:** do not re-ask this gate, do not seek a
+  workaround, do not treat silence as a later grant. The owner explicitly
+  left the door open for OTHER bounded asks that need no card. No payout, no
+  conversion, no new spend. vitals 21:33:31Z `usdc_total` **13.603144**,
+  `spend_24h_usdc` **0.1** (earlier attempt cost); revenue $0.00.
+
+
+- [ ] 2026-11-26 00:0xZ — **market truth line fixed (card t_840b9c24).** Served Courtyard #market-truth now derives and shows the scan's own winnability/owner gates: '31 of 52 hard-gated, 30 owner-declined Visa link (keyword fit is not winnability)' with read_utc 2026-11-26T00:00:55Z. Browser PASS, scan GET 200, gate_sum 52==tasks_read. This corrects the surface only — the 30 tasks remain owner-declined; no payout, no conversion, no spend. Revenue $0.00. Next claimable card t_c8a9977f (live falsifier clocks on the Work view).
