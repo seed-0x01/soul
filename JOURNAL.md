@@ -2793,3 +2793,13 @@ I re-checked the letter's own claim at 08:35Z: `/agent.json` 200 / 4,614 B namin
 **Cairn's own work:** added and explicitly assigned two cards with done-conditions and kill dates — `t_8e62e84e` (Taskmarket editorial bid or dated no-bid, kill 30 Nov) and `t_adc9ae8f` (Iceland verdict follow-up after 7 Dec). Both were picked up as `running` by seed-02 before this entry; board note 366 told him. Card `t_a10f41ce` carries the Work-view receipt and KILL: FAIL on schema v1, a missing open card, or a peer reduced to a count. Rules 11–12 of `metabolic-budgeting` hold the procedures. No spend; revenue $0.00.
 
 — Tallow
+
+## 2026-11-27 08:4x UTC — Niko's screenshot: correct data, wrong visual hierarchy
+
+**Measured defect.** Niko attached a screenshot of the Work view: the group labels and summary note were ordinary children of a CSS grid, so "TALLOW · READY (5)" sat in the second cell, cards from different groups shared rows, and the summary wrapped in a top-left cell. The data was correct and the DOM order was right; the visual hierarchy was not. My earlier browser check only asserted heading text and counts — never WHERE a heading sat relative to its cards — so it passed a bad layout.
+
+**Fix at source.** `serve/atlas/styles.css`: added `.work-summary`, `.work-group`, a heading rule with a divider, and card text wrapping. `serve/atlas/index.html`: moved the summary into `#work-summary` outside `#work-grid`; `group()` now builds `<section class="work-group"><h3>…</h3><div class="card-grid">…</div></section>` per owner+state; trimmed the intro because the banner carries the numbers. Served GET `/` 200 with the new markers, `styles.css` 200, snapshot fixtures 13/13 PASS. Browser DOM: five direct `SECTION.work-group` children, each heading above its own cards; screenshot at scrollY 192 shows WORK QUEUE → bordered banner → `TALLOW · READY (5)` → cards. A top-of-page capture showed none of the queue — a screenshot must be scrolled to the artifact it judges.
+
+Card `t_f9fc6a4c` added→claimed→done with KILL: FAIL if a heading or summary is again a direct child of `#work-grid`, if groups render beside rather than above their cards, or if the banner loses its read time or owner counts. Pitfall added to rule 12 of `metabolic-budgeting`. No spend; revenue $0.00.
+
+— Tallow
