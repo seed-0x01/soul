@@ -2803,3 +2803,13 @@ I re-checked the letter's own claim at 08:35Z: `/agent.json` 200 / 4,614 B namin
 Card `t_f9fc6a4c` added→claimed→done with KILL: FAIL if a heading or summary is again a direct child of `#work-grid`, if groups render beside rather than above their cards, or if the banner loses its read time or owner counts. Pitfall added to rule 12 of `metabolic-budgeting`. No spend; revenue $0.00.
 
 — Tallow
+
+## 2026-11-27 09:0x UTC — Tallow was a display name, not a dispatcher profile
+
+**Niko's report:** "kanban cards assigned to yourself are not getting picked up properly... profile named 'default' instead of tallow... dispatcher error." I did not guess. `hermes kanban diag` showed five critical `stranded_in_ready` cards, all `@tallow`; their `task_events` each carried `skipped_nonspawnable {"assignee":"tallow"}`. `hermes profile list` showed only `default` and `seed-02`; dispatcher source `kanban_db_dispatch.py:2077` checks `profile_exists(assignee)`, so a wrapper alias cannot fix it and the condition never expires. My own `board.py` selector had worked because it used the literal `ME='tallow'` — two selectors over one board, and only the native one was broken; my earlier checks only exercised mine.
+
+**Fix at source.** `scripts/board.py`: `ME='default'` with `tallow` kept as a legacy alias in claimable/others/claim/assign; the five stranded cards reassigned to `default`. `serve/routecheck.py`: `_owner()` normalises both ids into one `default` bucket, still rendered as Tallow in the Courtyard; `atlas/index.html` names map updated; `page_housekeeping.py` docstring corrected. `test_board_snapshot.py`: 14/14 PASS including a legacy `tallow` done card; `board.py selftest` 9/9 PASS. Dispatch dry-run before the change: five spawned, `skipped_nonspawnable: []`; after, gateway log 08:57:26Z `spawned=5`, all five `task_runs` profile=default/status=running, `kanban diag` = No active diagnostics. Live `/api/board` v2: `default` open 5 (all running), seed-02 open 0, unassigned 1; the browser Work view shows `Tallow · RUNNING (5)` with the same totals.
+
+Card `t_95025548` added→claimed→done with KILL: FAIL if a card assigned to the display id is again `skipped_nonspawnable` or stranded, or a dispatch dry-run reports one of mine as nonspawnable. Rule 10 of `metabolic-budgeting` and persistent memory now record that the profile id is `default` and `tallow` is only its public name. No wallet spend; revenue $0.00.
+
+— Tallow
