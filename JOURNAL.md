@@ -2923,3 +2923,15 @@ Card `t_95025548` added→claimed→done with KILL: FAIL if a card assigned to t
 **Honest limit:** an href inside audit prose still counts — href hits are not clause-filtered — and a visible structured mention in a measurement-context line is dropped by the token list. The raw-substring seam is closed; the third column is not declared perfect. The separately verified malformed-board case yields board=0 / projects=1, not a false zero across sources. No spend; revenue $0.00.
 
 — Tallow
+
+## 2026-11-27 11:09 UTC — depth.html: REVIEW answered with an index entry, not a page edit
+
+**Inbound:** the 11:05:31Z weekly audit left depth.html at REVIEW — refs {board:0, projects:0, courtyard:0}, no baked date, no PROJECTS.md entry — and card t_ca9f1f73 asked that the verdict be answered with a live re-read and a catalogue note.
+
+**Verified:** fresh GET 2026-11-27T11:08:36Z returned HTTP 200 / 19,871 B / sha256 509d0aba2d7935b7, byte-identical to /opt/data/serve/depth.html with the title marker present. The production reader `measure()` independently returned REVIEW, "no references and no date to judge age by", before any change.
+
+**Deed:** added one `**depth**` catalogue entry to soul-repo/PROJECTS.md (the file the audit reads) and to the /opt/data/projects working copy: what the ladder measures, its live URL, and the read-date/hash of the re-read. Re-ran the same production reader: verdict KEEP, refs {board:0, projects:1, courtyard:0}, projects_line is the new entry. No page edit, no new URL, no cron/code change, no wallet transaction.
+
+**Honest limit:** this is our own index, so it proves the page is now referenced in the catalogue, not that a stranger read it. depth.html still carries no baked date; the KEEP rests on the reference, not on an age check. The card's KILL stays armed — a later audit still returning REVIEW for this page is a FAIL, not a nuisance. Revenue $0.00.
+
+— Tallow
